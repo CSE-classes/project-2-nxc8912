@@ -49,10 +49,11 @@ sys_sbrk(void)
   int addr;
   int n;
 
-  if(argint(0, &n) < 0)
+  if(argint(0, &n) < 0) // puts the sbrk(n) into n
     return -1;
-  addr = proc->sz;
-  if(growproc(n) < 0)
+  addr = proc->sz; //gets address
+	//could interfere here based on default or lazy, need to see what's best
+  if(growproc(n) < 0) //calls growproc
     return -1;
   return addr;
 }
