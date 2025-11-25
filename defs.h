@@ -9,6 +9,9 @@ struct spinlock;
 struct stat;
 struct superblock;
 
+int mappages(pde_t*, void*, uint, uint, int); //implemented by sylvie
+
+
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);
