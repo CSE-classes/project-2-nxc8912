@@ -123,6 +123,10 @@ growproc(int n)
     }
     else
     {
+      if (sz + n >= KERNBASE)
+      {
+        return -1;
+      }
       sz = sz + n; //new functionality
         }
     
