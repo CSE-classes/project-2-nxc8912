@@ -51,7 +51,16 @@ trap(struct trapframe *tf)
  if(tf->trapno == T_PGFLT){                 // CS 3320 project 2
     uint faulting_va;                       // CS 3320 project 2
     faulting_va = rcr2();                   // CS 3320 project 2
-    cprintf("Unhandled page fault for va:0x%x!\n", faulting_va);     // CS 3320 project 2
+    if (page_allocator_type == 0)
+    {
+      cprintf("Unhandled page fault for va:0x%x!\n", faulting_va);     // CS 3320 project 2
+    }
+   else
+    {
+      char *mem = kalloc();
+      memset(mem, 0, PGSIZE);
+      mappages(proc->pgdir, PGROUNDDOWN(faulting_va), PGSIZE, V2P(mem), PTE_W|PTE_U);
+    }
  }
 
 
