@@ -55,7 +55,7 @@ trap(struct trapframe *tf)
  if(tf->trapno == T_PGFLT){                 // CS 3320 project 2
     uint faulting_va;                       // CS 3320 project 2
     faulting_va = rcr2();                   // CS 3320 project 2
-    if (page_allocator_type == 0)
+    if (page_allocator_type == 0) //sylvie code
     {
       cprintf("Unhandled page fault for va:0x%x!\n", faulting_va);     // CS 3320 project 2
     }
@@ -63,6 +63,7 @@ trap(struct trapframe *tf)
     {
       if (faulting_va > proc->sz)
       {
+        cprintf("Unhandled page fault for va:0x%x!\n", faulting_va);
         proc->killed = 1;
         return;
       }
