@@ -14,6 +14,9 @@ extern uint vectors[];  // in vectors.S: array of 256 entry pointers
 struct spinlock tickslock;
 uint ticks;
 
+
+extern int page_allocator_type; //new functionality added by sylvie
+
 void
 tvinit(void)
 {
