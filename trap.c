@@ -60,9 +60,10 @@ trap(struct trapframe *tf)
     }
    else
     {
+      a = PGROUNDDOWN(faulting_va)
       char *mem = kalloc();
       memset(mem, 0, PGSIZE);
-      mappages(proc->pgdir, PGROUNDDOWN(faulting_va), PGSIZE, V2P(mem), PTE_W|PTE_U);
+      mappages(proc->pgdir, (char*)a, PGSIZE, V2P(mem), PTE_W|PTE_U);
     }
  }
 
