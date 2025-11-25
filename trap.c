@@ -61,6 +61,11 @@ trap(struct trapframe *tf)
     }
    else
     {
+      if (faulting_va >= proc->sz)
+      {
+        proc->killed = 1;
+        return;
+      }
       uint a = PGROUNDDOWN(faulting_va);
       char *mem = kalloc();
       if (mem == 0) {
