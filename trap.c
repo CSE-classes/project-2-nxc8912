@@ -61,7 +61,7 @@ trap(struct trapframe *tf)
     }
    else
     {
-      if (faulting_va >= proc->sz)
+      if (faulting_va > proc->sz)
       {
         proc->killed = 1;
         return;
