@@ -7,6 +7,7 @@
 #include "x86.h"
 #include "traps.h"
 #include "spinlock.h"
+#include "vm.h" //sylvie
 
 // Interrupt descriptor table (shared by all CPUs).
 struct gatedesc idt[256];
@@ -62,8 +63,19 @@ trap(struct trapframe *tf)
     {
       uint a = PGROUNDDOWN(faulting_va);
       char *mem = kalloc();
+      if (mem == 0) {
+        cprintf("Out of memory handling fault at 0x%x\n", faulting_va);
+        proc->killed = 1;
+        return;
+      }
       memset(mem, 0, PGSIZE);
-      mappages(proc->pgdir, (char*)a, PGSIZE, V2P(mem), PTE_W|PTE_U);
+      if (mappages(proc->pgdir, (char*)a, PGSIZE, V2P(mem), PTE_W|PTE_U) < 0)
+      {
+        kfree(mem);
+        cprintf("mappages failed for 0x%x\n", faulting_va);
+        proc->killed = 1;
+        return;
+      }
     }
  }
 
