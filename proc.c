@@ -123,7 +123,7 @@ growproc(int n)
     }
     else
     {
-      proc->sz = sz+n; //new functionality
+      sz = sz + n; //new functionality
         }
     
   } else if(n < 0){
