@@ -125,6 +125,7 @@ growproc(int n)
     {
       if (sz + n >= KERNBASE)
       {
+        cprintf("Allocating pages failed!\n");
         return -1;
       }
       sz = sz + n; //new functionality
